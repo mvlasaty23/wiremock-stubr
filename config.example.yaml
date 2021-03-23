@@ -1,0 +1,48 @@
+# Variables be used everywhere
+context:
+  request:
+    aKey: aValue
+  stub:
+    aKey: aValue
+  mapping:
+    request.aKey: stub.aKey # replace value of request.aKey by stub.aKey
+    staticValue: aValue
+
+output:
+  baseDir: stubs/
+  folderName: "{stub.aKey}-{request.anotherKey}"
+  name: "{stub.aKey}-{request.anotherKey}"
+
+# Default response template
+response:
+  status: 200
+  headers:
+    Accept: application/json
+
+stubs:
+  name-here: # Memes wiremock mapping file
+    priority: 100
+    baseUrl: https://nice.url
+    requests:
+      request-name-here:
+        pathPattern: /some/path/here/with/{variable}
+        method: GET
+        params:
+          param1: 
+            equalTo: text
+          param2:
+            contains: "{variableName}"
+        header:
+          Accpet:
+            contains: json
+        cookies:
+          session:
+            matches: ".*1234"
+        bodyPatterns:
+          equalToJson:
+            - asdf
+        response:
+          status: 200
+
+        
+      

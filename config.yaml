@@ -1,0 +1,45 @@
+# Variables be used everywhere
+context:
+  request:
+    id: d135b532-7d41-439e-bc62-861c3fe9e682
+  stub:
+    id: mockId
+  mapping:
+    request.id: stub.id
+
+output:
+  folderName: '{{stub.id}}-stubs'
+  name: '{{stub.id}}-{{service.name}}-{{service.request}}'
+
+# Default response template
+response:
+  status: 200
+  headers:
+    Accept: application/json
+
+stubs:
+  stock-service: # Memes wiremock mapping file
+    priority: 100
+    baseUrl: https://nice.url
+    requests:
+      get-products:
+        url:
+          pathPattern: /some/path/here/with/{{request.id}}
+        method: GET
+        queryParameters:
+          param1:
+            equalTo: text
+          param2:
+            contains: '{{request.id}}'
+        headers:
+          Accpet:
+            contains: json
+        cookies:
+          session:
+            matches: '.*1234'
+        bodyPatterns:
+          equalToJson:
+            - asdf
+            - dsa
+        response:
+          status: 200
